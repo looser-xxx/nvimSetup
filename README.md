@@ -4,7 +4,7 @@ A powerful, modern, and aesthetically pleasing Neovim configuration built for C+
 
 ![UI Screenshot](ss.png)
 
-## ✨ Features
+## Features
 
 -   **C++ Powerhouse**: Pre-configured with `clangd` (LSP), `codelldb` (Debugging), and `clang-format`.
 -   **Automated Workspace**: Automatically opens the **File Explorer** (Left) and **Symbol Outline** (Right) on startup, keeping the **Dashboard** focused in the center.
@@ -13,7 +13,7 @@ A powerful, modern, and aesthetically pleasing Neovim configuration built for C+
 -   **Smart Completion**: Full auto-completion for code, command-line (`:`), and search (`/`).
 -   **Lazy Loading**: Fast startup times using `lazy.nvim` plugin manager.
 
-## 🚀 Installation
+## Installation
 
 1.  **Backup** your existing configuration:
     ```bash
@@ -30,19 +30,19 @@ A powerful, modern, and aesthetically pleasing Neovim configuration built for C+
     
     See `requirements.txt` for a full list. You can install them using your package manager:
 
-    ### 🐧 Ubuntu / Debian (apt)
+    ### Ubuntu / Debian (apt)
     ```bash
     sudo apt update
     sudo apt install neovim git ripgrep build-essential unzip xclip curl
     ```
     *(Note: Ensure you are installing Neovim v0.9.0+. You may need the [PPA](https://launchpad.net/~neovim-ppa/+archive/ubuntu/unstable) for older distributions).*
 
-    ### 🏹 Arch Linux (pacman)
+    ### Arch Linux (pacman) (by the way)
     ```bash
     sudo pacman -S neovim git ripgrep base-devel unzip xclip
     ```
 
-    ### 🎩 Fedora (dnf)
+    ### Fedora (dnf)
     ```bash
     sudo dnf install neovim git ripgrep gcc make unzip xclip
     ```
@@ -55,7 +55,7 @@ A powerful, modern, and aesthetically pleasing Neovim configuration built for C+
     ```
     *Wait a moment for `lazy.nvim` to automatically install all plugins.*
 
-## 🎨 Customization
+## Customization
 
 ### Changing the Dashboard Art
 You can easily customize the ASCII art shown on the dashboard!
@@ -65,7 +65,7 @@ You can easily customize the ASCII art shown on the dashboard!
 3.  **Restart Neovim**, and your new art will appear on the dashboard.
     *(Note: You may need to update `lua/plugins/ui.lua` if you want to change the art programmatically, but updating `asci.txt` serves as the source reference.)*
 
-## ⌨️ Key Bindings
+## Key Bindings
 
 **Leader Key**: `Space`
 
@@ -84,7 +84,7 @@ You can easily customize the ASCII art shown on the dashboard!
 -   `<Space> db`: Toggle Breakpoint
 -   `<Space> dc`: Start/Continue Debugging
 
-## 📂 Structure
+## Structure
 
 -   `init.lua`: Entry point.
 -   `lua/config/`: Core settings (keymaps, options, autocommands).

@@ -1,0 +1,12 @@
+# System Requirements for this Neovim Configuration
+# These are NOT Python packages. They are system tools required for the plugins to work.
+
+neovim>=0.9.0    # The editor itself
+git              # Plugin manager (lazy.nvim) relies on git
+ripgrep          # Telescope (file finder) relies on this for fast searching
+build-essential  # (GCC/Make) Required for compiling C++ and building Treesitter parsers
+unzip            # Required by Mason to extract packages
+xclip            # (Or wl-clipboard) For system clipboard integration
+nodejs           # (Optional) Required by Mason to install many LSP servers/tools
+npm              # (Optional) Package manager for Node
+python3          # (Optional) Some plugins might need Python provider

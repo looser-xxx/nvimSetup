@@ -27,12 +27,27 @@ A powerful, modern, and aesthetically pleasing Neovim configuration built for C+
     ```
 
 3.  **Install Dependencies**:
-    Ensure you have the following installed on your system:
-    -   Neovim (v0.9.0+)
-    -   Git
-    -   Ripgrep (for telescope search)
-    -   GCC or Clang
-    -   A Nerd Font (recommended for icons)
+    
+    See `requirements.txt` for a full list. You can install them using your package manager:
+
+    ### 🐧 Ubuntu / Debian (apt)
+    ```bash
+    sudo apt update
+    sudo apt install neovim git ripgrep build-essential unzip xclip curl
+    ```
+    *(Note: Ensure you are installing Neovim v0.9.0+. You may need the [PPA](https://launchpad.net/~neovim-ppa/+archive/ubuntu/unstable) for older distributions).*
+
+    ### 🏹 Arch Linux (pacman)
+    ```bash
+    sudo pacman -S neovim git ripgrep base-devel unzip xclip
+    ```
+
+    ### 🎩 Fedora (dnf)
+    ```bash
+    sudo dnf install neovim git ripgrep gcc make unzip xclip
+    ```
+
+    *It is also recommended to install a **Nerd Font** (e.g., JetBrainsMono Nerd Font) for icons to render correctly.*
 
 4.  **Start Neovim**:
     ```bash

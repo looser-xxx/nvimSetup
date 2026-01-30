@@ -15,20 +15,9 @@ A powerful, modern, and aesthetically pleasing Neovim configuration built for C+
 
 ## Installation
 
-1.  **Backup** your existing configuration:
-    ```bash
-    mv ~/.config/nvim ~/.config/nvim.bak
-    mv ~/.local/share/nvim ~/.local/share/nvim.bak
-    ```
-
-2.  **Clone** this repository:
-    ```bash
-    git clone https://github.com/looser-xxx/nvimSetup.git ~/.config/nvim
-    ```
-
-3.  **Install Dependencies**:
+1.  **Install Dependencies**:
     
-    See `requirements.txt` for a full list. You can install them using your package manager:
+    Before cloning, ensure you have Git, Neovim, and other tools installed. See `requirements.txt` for a full list.
 
     ### Ubuntu / Debian (apt)
     ```bash
@@ -48,6 +37,17 @@ A powerful, modern, and aesthetically pleasing Neovim configuration built for C+
     ```
 
     *It is also recommended to install a **Nerd Font** (e.g., JetBrainsMono Nerd Font) for icons to render correctly.*
+
+2.  **Backup** your existing configuration:
+    ```bash
+    mv ~/.config/nvim ~/.config/nvim.bak
+    mv ~/.local/share/nvim ~/.local/share/nvim.bak
+    ```
+
+3.  **Clone** this repository:
+    ```bash
+    git clone https://github.com/looser-xxx/nvimSetup.git ~/.config/nvim
+    ```
 
 4.  **Start Neovim**:
     ```bash

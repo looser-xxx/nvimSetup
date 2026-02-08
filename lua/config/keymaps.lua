@@ -123,3 +123,27 @@ map("n", "<leader>rc", function()
   -- Enter insert mode
   vim.cmd("startinsert")
 end, { desc = "Run C++ File" })
+
+-- Run Python
+local py_term_buf = nil
+map("n", "<leader>pr", function()
+  -- If a terminal buffer exists and is valid, delete it
+  if py_term_buf and vim.api.nvim_buf_is_valid(py_term_buf) then
+    vim.api.nvim_buf_delete(py_term_buf, { force = true })
+  end
+
+  local file = vim.fn.expand("%")
+  vim.cmd("w")
+  
+  -- Open a horizontal split at the bottom
+  vim.cmd("botright 10new")
+  
+  local cmd = "python3 " .. file
+  vim.fn.termopen(cmd)
+  
+  -- Store the new buffer ID
+  py_term_buf = vim.api.nvim_get_current_buf()
+  
+  -- Enter insert mode
+  vim.cmd("startinsert")
+end, { desc = "Run Python File" })

@@ -53,61 +53,66 @@ vim.api.nvim_create_autocmd("VimEnter", {
 -- CUSTOM HIGHLIGHTS
 local function setup_colors()
     local colors = {
-        gray = "#5c6370",
-        red = "#e06c75",
-        blue = "#61afef",
-        cyan = "#56b6c2",
-        green = "#98c379",
-        yellow = "#e5c07b",
-        orange = "#d19a66",
-        purple = "#c678dd",
+        orange = "#d19a66", -- numbers/booleans
+        red    = "#E06C75", -- variables/operators
+        green  = "#98c379", -- strings
+        yellow = "#E5C07B", -- classes/types
+        blue   = "#61AFEF", -- functions/methods
+        purple = "#C678DD", -- keywords/builtin vars
+        cyan   = "#56B6C2", -- builtins/parameters
+        gray   = "#5c6370", -- comments
     }
 
-    -- 1. Standard Vim Highlights (Fallback)
-    vim.api.nvim_set_hl(0, "Comment", { fg = colors.gray, italic = true })
-    vim.api.nvim_set_hl(0, "@comment", { fg = colors.gray, italic = true })
-    vim.api.nvim_set_hl(0, "@string.documentation", { fg = colors.gray })
+    -- Standard Treesitter Groups
+    local highlights = {
+        -- Variables & Identifiers
+        ["@variable"]          = { fg = colors.red },
+        ["@variable.builtin"]  = { fg = colors.purple, bold = true }, -- self, this
+        ["@variable.parameter"] = { fg = colors.cyan, italic = true },
+        ["@variable.member"]    = { fg = colors.red }, -- object.member
+        ["@property"]          = { fg = colors.red },
 
-    -- 2. Treesitter Highlights
-    -- Python 'self' / C++ 'this'
-    vim.api.nvim_set_hl(0, "@variable.builtin", { fg = colors.red, bold = true })
-    
-    -- Modules (e.g., 'pygame')
-    vim.api.nvim_set_hl(0, "@module", { fg = colors.blue })
-    vim.api.nvim_set_hl(0, "@namespace", { fg = colors.blue })
-    
-    -- Properties / Member variables
-    vim.api.nvim_set_hl(0, "@property", { fg = colors.cyan })
-    vim.api.nvim_set_hl(0, "@variable.member", { fg = colors.cyan })
-    
-    -- Parameters
-    vim.api.nvim_set_hl(0, "@variable.parameter", { fg = colors.orange })
+        -- Functions & Methods
+        ["@function"]          = { fg = colors.blue, bold = true },
+        ["@function.call"]     = { fg = colors.blue },
+        ["@function.builtin"]  = { fg = colors.cyan }, -- print()
+        ["@method"]            = { fg = colors.blue },
+        ["@method.call"]       = { fg = colors.blue },
 
-    -- Functions/Methods
-    vim.api.nvim_set_hl(0, "@function", { fg = colors.green })
-    vim.api.nvim_set_hl(0, "@method", { fg = colors.green })
-    vim.api.nvim_set_hl(0, "@function.call", { fg = colors.green })
-    
-    -- Types/Classes
-    vim.api.nvim_set_hl(0, "@type", { fg = colors.yellow })
-    vim.api.nvim_set_hl(0, "@constructor", { fg = colors.yellow })
+        -- Keywords & Types
+        ["@keyword"]           = { fg = colors.purple, italic = true },
+        ["@keyword.function"]  = { fg = colors.purple, bold = true }, -- 'def', 'function'
+        ["@type"]              = { fg = colors.yellow },
+        ["@type.builtin"]      = { fg = colors.yellow },
+        ["@module"]            = { fg = colors.yellow }, -- pygame, os, etc.
+        ["@namespace"]         = { fg = colors.yellow },
+
+        -- Literals
+        ["@number"]            = { fg = colors.orange },
+        ["@boolean"]           = { fg = colors.orange },
+        ["@string"]            = { fg = colors.green },
+        ["@constant"]          = { fg = colors.orange },
+
+        -- Comments
+        ["Comment"]            = { fg = colors.gray, italic = true },
+        ["@comment"]           = { fg = colors.gray },
+        ["@string.documentation"] = { fg = colors.gray },
+    }
+
+    for group, opts in pairs(highlights) do
+        vim.api.nvim_set_hl(0, group, opts)
+    end
 end
 
--- Run on Colorscheme change
+-- Apply on Colorscheme change (after theme loads)
 vim.api.nvim_create_autocmd("ColorScheme", {
     callback = setup_colors,
 })
 
--- Run on FileType to be extra sure
+-- Apply on FileType to ensure they stick
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "python", "cpp", "c" },
-    callback = function()
-        setup_colors()
-        if vim.bo.filetype == "python" then
-            vim.cmd([[syn keyword pythonSelf self]])
-            vim.api.nvim_set_hl(0, "pythonSelf", { fg = "#e06c75", bold = true })
-        end
-    end,
+    pattern = { "python", "cpp", "c", "java", "lua" },
+    callback = setup_colors,
 })
 
 -- Initial run

@@ -65,6 +65,7 @@ map("n", "<leader>rc", function()
     vim.api.nvim_buf_delete(cpp_term_buf, { force = true })
   end
 
+  local main_win = vim.api.nvim_get_current_win()
   local file = vim.fn.expand("%")
   local output = vim.fn.expand("%:r")
   
@@ -114,12 +115,28 @@ map("n", "<leader>rc", function()
   local debug_info = "echo 'Detected pkgs: " .. table.concat(pkgs, ", ") .. "'; "
   debug_info = debug_info .. "echo 'Flags: " .. flags .. "'; "
 
-  local cmd = debug_info .. "g++ " .. file .. " " .. flags .. " -o " .. output .. " && ./" .. output
+  local cmd = debug_info .. "(g++ " .. file .. " " .. flags .. " -o " .. output .. " && ./" .. output .. ") ; echo -e '\\n[Finished] Press any key to close...' ; read -n 1 -s"
   vim.fn.termopen(cmd)
   
   -- Store the new buffer ID
   cpp_term_buf = vim.api.nvim_get_current_buf()
   
+  -- Auto-close terminal on exit and focus back to editor
+  vim.api.nvim_create_autocmd("TermClose", {
+    buffer = cpp_term_buf,
+    once = true,
+    callback = function()
+      vim.schedule(function()
+        if cpp_term_buf and vim.api.nvim_buf_is_valid(cpp_term_buf) then
+          vim.api.nvim_buf_delete(cpp_term_buf, { force = true })
+        end
+        if vim.api.nvim_win_is_valid(main_win) then
+          vim.api.nvim_set_current_win(main_win)
+        end
+      end)
+    end,
+  })
+
   -- Enter insert mode
   vim.cmd("startinsert")
 end, { desc = "Run C++ File" })
@@ -132,18 +149,35 @@ map("n", "<leader>pr", function()
     vim.api.nvim_buf_delete(py_term_buf, { force = true })
   end
 
+  local main_win = vim.api.nvim_get_current_win()
   local file = vim.fn.expand("%")
   vim.cmd("w")
   
   -- Open a horizontal split at the bottom
   vim.cmd("botright 10new")
   
-  local cmd = "python3 " .. file
+  local cmd = "python3 " .. file .. " ; echo -e '\\n[Finished] Press any key to close...' ; read -n 1 -s"
   vim.fn.termopen(cmd)
   
   -- Store the new buffer ID
   py_term_buf = vim.api.nvim_get_current_buf()
   
+  -- Auto-close terminal on exit and focus back to editor
+  vim.api.nvim_create_autocmd("TermClose", {
+    buffer = py_term_buf,
+    once = true,
+    callback = function()
+      vim.schedule(function()
+        if py_term_buf and vim.api.nvim_buf_is_valid(py_term_buf) then
+          vim.api.nvim_buf_delete(py_term_buf, { force = true })
+        end
+        if vim.api.nvim_win_is_valid(main_win) then
+          vim.api.nvim_set_current_win(main_win)
+        end
+      end)
+    end,
+  })
+
   -- Enter insert mode
   vim.cmd("startinsert")
 end, { desc = "Run Python File" })

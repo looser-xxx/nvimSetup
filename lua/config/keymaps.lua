@@ -150,18 +150,16 @@ map("n", "<leader>pr", function()
   end
 
   local main_win = vim.api.nvim_get_current_win()
-  local file = vim.fn.expand("%")
-  vim.cmd("w")
-  
+  vim.cmd("wa")
+
   -- Open a horizontal split at the bottom
   vim.cmd("botright 10new")
-  
-  local cmd = "python3 " .. file .. " ; echo -e '\\n[Finished] Press any key to close...' ; read -n 1 -s"
+
+  local cmd = "python3 main.py ; echo -e '\\n[Finished] Press any key to close...' ; read -n 1 -s"
   vim.fn.termopen(cmd)
-  
+
   -- Store the new buffer ID
-  py_term_buf = vim.api.nvim_get_current_buf()
-  
+  py_term_buf = vim.api.nvim_get_current_buf()  
   -- Auto-close terminal on exit and focus back to editor
   vim.api.nvim_create_autocmd("TermClose", {
     buffer = py_term_buf,

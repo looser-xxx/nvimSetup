@@ -20,11 +20,12 @@ return {
           css = { "prettierd", "prettier", stop_after_first = true },
           markdown = { "prettierd", "prettier", stop_after_first = true },
         },
-        format_on_save = {
-          lsp_fallback = true,
-          async = false,
-          timeout_ms = 1000,
-        },
+        format_on_save = function(bufnr)
+          return {
+            timeout_ms = 1000,
+            lsp_fallback = true,
+          }
+        end,
       })
 
       vim.keymap.set({ "n", "v" }, "<leader>mp", function()

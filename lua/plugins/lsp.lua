@@ -5,6 +5,7 @@ return {
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     config = function()
       -- Setup Mason to automatically install LSP servers
@@ -12,6 +13,18 @@ return {
       require("mason-lspconfig").setup({
         ensure_installed = { "clangd", "lua_ls" },
         automatic_installation = true,
+      })
+
+      require("mason-tool-installer").setup({
+        ensure_installed = {
+          "black",
+          "isort",
+          "stylua",
+          "clang-format",
+          "prettier",
+          "prettierd",
+          "shfmt",
+        },
       })
 
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
